@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[CreateAssetMenu(fileName = "InputReader", menuName = "Input/InputReader")]
 public class InputReader : ScriptableObject, PlayerInputActions.IPlayerActions
 {
     private PlayerInputActions _inputActions;
@@ -12,7 +13,7 @@ public class InputReader : ScriptableObject, PlayerInputActions.IPlayerActions
     public event Action InteractEvent;
     public event Action PauseEvent;
 
-    void Start()
+    private void OnEnable()
     {
         if (_inputActions == null)
         {
@@ -20,6 +21,11 @@ public class InputReader : ScriptableObject, PlayerInputActions.IPlayerActions
             _inputActions.Player.SetCallbacks(this);
             SwitchMap(_inputActions.Player);
         }
+
+#if UNITY_EDITOR
+        _inputActions.Player.Pause.ApplyBindingOverride("<Keyboard>/tab", path: "<Keyboard>/escape");
+        // _inputActions.UI.Unpause.ApplyBindingOverride("<Keyboard>/tab", path: "<Keyboard>/escape");
+#endif
     }
 
     private void SwitchMap(InputActionMap map)
