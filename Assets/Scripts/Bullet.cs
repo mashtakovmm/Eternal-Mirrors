@@ -18,10 +18,11 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, 1.22f);
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.transform.tag != "Player")
         {
+            Debug.Log("Bullet hit");
             Destroy(gameObject);
         }
     }
