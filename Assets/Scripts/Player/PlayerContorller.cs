@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerContorller : MonoBehaviour
@@ -8,6 +7,8 @@ public class PlayerContorller : MonoBehaviour
 
     [Header("Controls Variables")]
     [SerializeField] private float speed;
+    [Header("Stats")]
+    [SerializeField] private int _health;
 
 
     private Vector2 move;
@@ -43,5 +44,20 @@ public class PlayerContorller : MonoBehaviour
     private void HandleMoveEvent(Vector2 vector2)
     {
         move = vector2;
+    }
+
+    public void TakeDamage(int value)
+    {
+        _health -= value;
+        if (_health <= 0)
+        {
+            Die();
+        }
+        Debug.Log(_health);
+    }
+
+    private void Die()
+    {
+        Debug.Log("PLAYER DEAD");
     }
 }

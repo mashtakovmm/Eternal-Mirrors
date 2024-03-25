@@ -4,6 +4,7 @@ public class Bullet : MonoBehaviour
 {
     [HideInInspector] public float speed;
     [HideInInspector] public int damage;
+    [SerializeField] private bool isPlayerBullet;
     private Rigidbody2D rb;
 
     private void Awake()
@@ -20,9 +21,9 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.transform.tag != "Player")
+        if (isPlayerBullet && other.transform.tag != "Player")
         {
-            Debug.Log("Bullet hit");
+            Debug.Log("hit");
             Destroy(gameObject);
         }
     }
