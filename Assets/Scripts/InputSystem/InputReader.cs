@@ -12,6 +12,7 @@ public class InputReader : ScriptableObject, PlayerInputActions.IPlayerActions
     public event Action ShootEvent;
     public event Action InteractEvent;
     public event Action PauseEvent;
+    public event Action ReloadEvent;
 
     private void OnEnable()
     {
@@ -68,5 +69,11 @@ public class InputReader : ScriptableObject, PlayerInputActions.IPlayerActions
         }
     }
 
-
+    public void OnReload(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            ReloadEvent?.Invoke();
+        }
+    }
 }
