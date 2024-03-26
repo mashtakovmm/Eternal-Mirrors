@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerContorller : MonoBehaviour
@@ -10,6 +12,9 @@ public class PlayerContorller : MonoBehaviour
     [Header("Stats")]
     [SerializeField] private int _health;
 
+    private List<IInteractable> interactables; 
+    private CircleCollider2D circleCollider;
+
 
     private Vector2 move;
 
@@ -18,11 +23,20 @@ public class PlayerContorller : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        interactables = new List<IInteractable>();
     }
 
     private void FixedUpdate()
     {
         Move();
+    }
+
+    private void Update()
+    {
+        if (interactables.Count != 0 && interactables != null)
+        {
+            interactables[0].Highligh();
+        }
     }
 
 
@@ -34,11 +48,21 @@ public class PlayerContorller : MonoBehaviour
     private void OnEnable()
     {
         inputReader.MoveEvent += HandleMoveEvent;
+        inputReader.InteractEvent += HandleInteract;
     }
 
     private void OnDisable()
     {
         inputReader.MoveEvent -= HandleMoveEvent;
+        inputReader.InteractEvent -= HandleInteract;
+    }
+
+    private void HandleInteract()
+    {
+        if (interactables.Count != 0 && interactables != null)
+        {
+            interactables[0].Interact(gameObject);
+        }
     }
 
     private void HandleMoveEvent(Vector2 vector2)
@@ -59,5 +83,26 @@ public class PlayerContorller : MonoBehaviour
     private void Die()
     {
         Debug.Log("PLAYER DEAD");
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("trigger");
+        IInteractable interactable = other.GetComponent<IInteractable>();
+        if (interactable != null)
+        {
+            Debug.Log("Mirror");
+            interactables.Add(interactable);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        IInteractable interactable = other.GetComponent<IInteractable>();
+        if (interactable != null)
+        {
+            interactable.RemoveHighligh();
+            interactables.Remove(interactable);
+        }
     }
 }

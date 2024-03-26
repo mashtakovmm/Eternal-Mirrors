@@ -43,7 +43,10 @@ public class EnemySpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(UnityEngine.Random.Range(minSpawnTime, maxSpawnTime));
 
-        Vector3 spawnPoint = new Vector3(UnityEngine.Random.Range(-plane.transform.localScale.x / 2, plane.transform.localScale.x / 2), UnityEngine.Random.Range(-plane.transform.localScale.y / 2, plane.transform.localScale.y / 2), 0);
+        Vector3 spawnPoint = new Vector3(UnityEngine.Random.Range(-plane.transform.localScale.x / 2,
+        plane.transform.localScale.x / 2), UnityEngine.Random.Range(-plane.transform.localScale.y / 2, plane.transform.localScale.y / 2), 0);
+
+        spawnPoint += plane.transform.position;
 
         Instantiate(testEnemyPrefab, spawnPoint, Quaternion.identity);
 
