@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (isPlayerBullet && other.transform.tag != "Player")
+        if (isPlayerBullet && other.transform.tag != "Player" && other.transform.tag != "Plane")
         {
             Debug.Log("hit");
             Destroy(gameObject);
