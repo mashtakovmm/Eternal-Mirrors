@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
     EnemySpawner spawner;
+    MoneyManager moneyManager;
 
     // Data SO stuff
     private int health;
@@ -83,6 +84,7 @@ public class EnemyController : MonoBehaviour
 
     private void Die()
     {
+        moneyManager.AddMoney(Random.Range(1, 4));
         spawner.kills++;
         Destroy(gameObject);
     }

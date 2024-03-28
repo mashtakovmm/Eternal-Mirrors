@@ -22,6 +22,8 @@ public class PlayerContorller : MonoBehaviour
     public int Health => health;
     public float Speed => speed;
     public string currentTip = "";
+    bool isDead;
+    public bool IsDead => isDead;
 
     private void Start()
     {
@@ -30,11 +32,15 @@ public class PlayerContorller : MonoBehaviour
         interactables = new List<IInteractable>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        isDead = false;
     }
 
     private void FixedUpdate()
     {
-        Move();
+        if (!isDead)
+        {
+            Move();
+        }
     }
 
     private void Update()
@@ -67,7 +73,8 @@ public class PlayerContorller : MonoBehaviour
 
     private void HandleInteract()
     {
-        if (interactables.Count != 0 && interactables != null)
+        
+        if (interactables.Count != 0 && interactables != null && !isDead)
         {
             interactables[0].Interact(gameObject);
         }
@@ -94,7 +101,7 @@ public class PlayerContorller : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("PLAYER DEAD");
+        isDead = true;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

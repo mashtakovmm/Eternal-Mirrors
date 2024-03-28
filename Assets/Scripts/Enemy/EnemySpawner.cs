@@ -7,6 +7,8 @@ public class EnemySpawner : MonoBehaviour
 {
     [Header("Enemy Prefabs")]
     [SerializeField] private GameObject testEnemyPrefab;
+    [SerializeField] private GameObject smokePrefab;
+    private int smokeCount;
 
     [Header("Wave Data")]
     [SerializeField] private SpawnSettingsSO waveData;
@@ -53,6 +55,8 @@ public class EnemySpawner : MonoBehaviour
         }
         isSpawning = true;
         spawnCoroutine = StartCoroutine(SpawnCourutine());
+
+
     }
 
     public void StopSpawning()
@@ -70,13 +74,13 @@ public class EnemySpawner : MonoBehaviour
             Debug.Log("destroy");
             Destroy(child.gameObject);
         }
+        smokeCount = 0;
     }
 
     private IEnumerator SpawnCourutine()
     {
         yield return new WaitForSeconds(Random.Range(minSpawnTime, maxSpawnTime));
 
-        // Find all valid tiles
         List<Vector3Int> validTiles = new List<Vector3Int>();
         for (int x = tilemap.cellBounds.xMin; x < tilemap.cellBounds.xMax; x++)
         {
@@ -90,17 +94,18 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
-        // Select a random tile
         if (validTiles.Count > 0)
         {
             int randomIndex = Random.Range(0, validTiles.Count);
             Vector3Int selectedTile = validTiles[randomIndex];
 
-            // Convert cell position to world position
             Vector3 spawnPoint = tilemap.CellToWorld(selectedTile);
 
-            // Instantiate enemy at the world position
             Instantiate(testEnemyPrefab, spawnPoint, Quaternion.identity, transform);
+            if (smokeCount < 3)
+            {
+                Instantiate(smokePrefab, spawnPoint, Quaternion.identity, transform);
+            }
             EnemyController enemyController = testEnemyPrefab.GetComponent<EnemyController>();
             enemyController.ApplyWaveDiff(wave);
         }

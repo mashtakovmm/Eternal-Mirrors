@@ -14,6 +14,7 @@ public class Auitorifle : MonoBehaviour, IGun
     [SerializeField] private float rotateSpeed;
     // input data
     private Vector2 rawMousePos;
+    private PlayerContorller playerContorller;
 
 
     //stuff from data SO
@@ -50,12 +51,14 @@ public class Auitorifle : MonoBehaviour, IGun
 
     void Start()
     {
+        playerContorller = transform.parent.GetComponent<PlayerContorller>();
         currentMagSize = _maxMagSize;
     }
 
     void Update()
     {
-        Look();
+        if (!playerContorller.IsDead) { Look(); }
+
         if (_shootingSpeed <= 0.1)
         {
             _shootingSpeed = 0.1f;
@@ -97,8 +100,11 @@ public class Auitorifle : MonoBehaviour, IGun
 
     public void Shoot()
     {
-        isShooting = true;
-        StartCoroutine(ShootingCoroutine());
+        if (!playerContorller.IsDead)
+        {
+            isShooting = true;
+            StartCoroutine(ShootingCoroutine());
+        }
     }
 
     public void Reload()

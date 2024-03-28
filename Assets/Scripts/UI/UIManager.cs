@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject tip;
     [SerializeField] TMP_Text tipText;
     [SerializeField] TMP_Text waveNumber;
+    [SerializeField] GameObject gameOverScreen;
 
     private void Update()
     {
@@ -40,6 +41,9 @@ public class UIManager : MonoBehaviour
         else
         {
             tip.SetActive(false);
+        }
+        if(player.IsDead) {
+            gameOverScreen.SetActive(true);
         }
 
     }
