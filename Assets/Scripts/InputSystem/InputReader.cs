@@ -9,7 +9,8 @@ public class InputReader : ScriptableObject, PlayerInputActions.IPlayerActions
 
     public event Action<Vector2> MoveEvent;
     public event Action<Vector2> LookEvent;
-    public event Action ShootEvent;
+    public event Action ShootStartEvent;
+    public event Action ShootStopEvent;
     public event Action InteractEvent;
     public event Action PauseEvent;
     public event Action ReloadEvent;
@@ -57,8 +58,13 @@ public class InputReader : ScriptableObject, PlayerInputActions.IPlayerActions
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            ShootEvent?.Invoke();
+            ShootStartEvent?.Invoke();
         }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            ShootStopEvent?.Invoke();
+        }
+        Debug.Log(context);
     }
 
     public void OnPause(InputAction.CallbackContext context)

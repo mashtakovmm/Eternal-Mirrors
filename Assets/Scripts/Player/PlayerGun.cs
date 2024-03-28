@@ -29,6 +29,7 @@ public class PlayerGun : MonoBehaviour, IGun
     private int currentMagSize;
     private float nextShotTime = 0f;
     private bool isReloading;
+    bool isShooting;
 
     private void Awake()
     {
@@ -63,14 +64,16 @@ public class PlayerGun : MonoBehaviour, IGun
 
     private void OnEnable()
     {
-        inputReader.ShootEvent += Shoot;
+        inputReader.ShootStartEvent += Shoot;
+        inputReader.ShootStopEvent += StopShooting;
         inputReader.ReloadEvent += Reload;
         inputReader.LookEvent += HandleLookEvent;
     }
 
     private void OnDisable()
     {
-        inputReader.ShootEvent -= Shoot;
+        inputReader.ShootStartEvent -= Shoot;
+        inputReader.ShootStopEvent -= StopShooting;
         inputReader.ReloadEvent -= Reload;
         inputReader.LookEvent -= HandleLookEvent;
     }
@@ -89,32 +92,51 @@ public class PlayerGun : MonoBehaviour, IGun
 
     public void Shoot()
     {
-        if (nextShotTime <= 0 && currentMagSize > 0 && !isReloading)
+        if (!isShooting)
         {
-            Bullet bullet = bulletPrefab.GetComponent<Bullet>();
-
-            bullet.speed = _bulletSpeed;
-            bullet.damage = _damage;
-
-            Instantiate(bulletPrefab, shootingPoint.position, transform.rotation);
-
-            currentMagSize--;
-            nextShotTime = _shootingSpeed;
-        }
-        Debug.Log(currentMagSize);
-
-        if (currentMagSize <= 0)
-        {
-            Reload();
+            StartCoroutine(ShootingCoroutine());
         }
     }
 
     public void Reload()
     {
-        if (currentMagSize != _maxMagSize && !isReloading) 
+        if (currentMagSize != _maxMagSize && !isReloading)
         {
             StartCoroutine(ReloadCoroutine());
         }
+    }
+
+    private void StopShooting()
+    {
+        isShooting = false;
+        StopCoroutine(ShootingCoroutine());
+    }
+
+    private IEnumerator ShootingCoroutine()
+    {
+        isShooting = true;
+        while (currentMagSize > 0 && !isReloading)
+        {
+            yield return new WaitForSeconds(_shootingSpeed);
+            if (nextShotTime <= 0)
+            {
+                Bullet bullet = bulletPrefab.GetComponent<Bullet>();
+
+                bullet.speed = _bulletSpeed;
+                bullet.damage = _damage;
+
+                Instantiate(bulletPrefab, shootingPoint.position, transform.rotation);
+
+                currentMagSize--;
+                nextShotTime = _shootingSpeed;
+            }
+
+            if (currentMagSize <= 0)
+            {
+                Reload();
+            }
+        }
+        isShooting = false;
     }
 
     private IEnumerator ReloadCoroutine()

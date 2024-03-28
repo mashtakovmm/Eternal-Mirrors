@@ -91,7 +91,6 @@ public class PlayerContorller : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("trigger");
         IInteractable interactable = other.GetComponent<IInteractable>();
         if (interactable != null)
         {

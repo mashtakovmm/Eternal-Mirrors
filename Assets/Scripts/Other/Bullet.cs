@@ -23,7 +23,6 @@ public class Bullet : MonoBehaviour
     {
         if (isPlayerBullet && other.transform.tag != "Player" && other.transform.tag != "Plane")
         {
-            Debug.Log("hit");
             Destroy(gameObject);
         }
     }

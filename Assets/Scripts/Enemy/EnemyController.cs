@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
     private PlayerContorller player;
     private Vector2 playerPosition;
     private Rigidbody2D rb;
+    SpriteRenderer spriteRenderer;
 
     // Data SO stuff
     private int health;
@@ -24,6 +25,7 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         player = FindObjectOfType<PlayerContorller>();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -34,9 +36,14 @@ public class EnemyController : MonoBehaviour
 
         Vector2 direction = (playerPosition - (Vector2)transform.position).normalized;
 
+        if (direction != Vector2.zero)
+        {
+            spriteRenderer.flipX = direction.x < 0;
+        }
+
         rb.velocity = direction * speed;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+        // float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        // transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
