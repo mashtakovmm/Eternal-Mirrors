@@ -2,6 +2,9 @@
 A game made for [Jame Gam #38](https://itch.io/jam/jame-gam-38) in about 3 days in free time. <br>
 Might update and write better code later.<br>
 
+## Project links
+You can find this game on itch.io [here](https://melonramune.itch.io/zombie-mirror-island-mahunem)<br>
+
 ## Contributions
 This project utilizes assets:
 
