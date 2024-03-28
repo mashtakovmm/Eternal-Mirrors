@@ -11,7 +11,7 @@ This project utilizes assets:
 - **Simple 2D Platformer Assets Pack** created by **Goldmetal**: [Simple 2D Platformer Assets Pack](https://assetstore.unity.com/packages/2d/characters/simple-2d-platformer-assets-pack-188518)<br>
 
 ### Fonts
-**Wendy Neue Font** created by **UkiyoMoji**: [Wendy Neue Font](https://www.1001fonts.com/wendy-neue-font.html)<br>
+- **Wendy Neue Font** created by **UkiyoMoji**: [Wendy Neue Font](https://www.1001fonts.com/wendy-neue-font.html)<br>
 
 ### Music
-**Railgun Rain** created by **Ivan Stanton (northivanastan)**: [Railgun Rain](https://opengameart.org/content/railgun-rain)<br>
+- **Railgun Rain** created by **Ivan Stanton (northivanastan)**: [Railgun Rain](https://opengameart.org/content/railgun-rain)<br>
