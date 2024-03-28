@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -21,6 +22,8 @@ public class EnemySpawner : MonoBehaviour
     int waveWeight;
     private Coroutine spawnCoroutine;
     bool isSpawning;
+    private int wave = 0;
+    public int Wave => wave;
 
 
     void Start()
@@ -43,6 +46,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void StartSpawn()
     {
+        wave++;
         if (spawnCoroutine != null)
         {
             StopCoroutine(spawnCoroutine);
@@ -72,10 +76,34 @@ public class EnemySpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(minSpawnTime, maxSpawnTime));
 
-        Vector3 spawnPoint = new Vector3(Random.Range(-tilemap.size.x / 2, tilemap.size.x / 2), Random.Range(-tilemap.size.y / 2, tilemap.size.y / 2), 0);
-        spawnPoint += plane.transform.position;
+        // Find all valid tiles
+        List<Vector3Int> validTiles = new List<Vector3Int>();
+        for (int x = tilemap.cellBounds.xMin; x < tilemap.cellBounds.xMax; x++)
+        {
+            for (int y = tilemap.cellBounds.yMin; y < tilemap.cellBounds.yMax; y++)
+            {
+                Vector3Int cellPosition = new Vector3Int(x, y, 0);
+                if (tilemap.HasTile(cellPosition))
+                {
+                    validTiles.Add(cellPosition);
+                }
+            }
+        }
 
-        Instantiate(testEnemyPrefab, spawnPoint, Quaternion.identity, transform);
+        // Select a random tile
+        if (validTiles.Count > 0)
+        {
+            int randomIndex = Random.Range(0, validTiles.Count);
+            Vector3Int selectedTile = validTiles[randomIndex];
+
+            // Convert cell position to world position
+            Vector3 spawnPoint = tilemap.CellToWorld(selectedTile);
+
+            // Instantiate enemy at the world position
+            Instantiate(testEnemyPrefab, spawnPoint, Quaternion.identity, transform);
+            EnemyController enemyController = testEnemyPrefab.GetComponent<EnemyController>();
+            enemyController.ApplyWaveDiff(wave);
+        }
 
         if (isSpawning)
         {

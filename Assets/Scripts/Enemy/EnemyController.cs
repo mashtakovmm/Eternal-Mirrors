@@ -24,6 +24,14 @@ public class EnemyController : MonoBehaviour
         damage = dataSO.Damage;
     }
 
+    public void ApplyWaveDiff(int wave)
+    {
+        health = health * wave / 10;
+        score = score * wave / 10;
+        speed = speed * wave / 30;
+        damage = damage * wave / 10;
+    }
+
     void Start()
     {
         spawner = FindObjectOfType<EnemySpawner>();
@@ -75,7 +83,7 @@ public class EnemyController : MonoBehaviour
 
     private void Die()
     {
-        spawner.kills ++;
+        spawner.kills++;
         Destroy(gameObject);
     }
 }

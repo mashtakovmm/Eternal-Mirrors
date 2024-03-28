@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] PlayerContorller player;
     [SerializeField] Auitorifle playerGun;
     [SerializeField] MoneyManager moneyManager;
+    [SerializeField] EnemySpawner spawner;
     [Header("UI panels")]
     [SerializeField] TMP_Text healthText;
     [SerializeField] TMP_Text moneyText;
@@ -19,6 +20,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] TMP_Text ammo;
     [SerializeField] GameObject tip;
     [SerializeField] TMP_Text tipText;
+    [SerializeField] TMP_Text waveNumber;
 
     private void Update()
     {
@@ -29,6 +31,7 @@ public class UIManager : MonoBehaviour
         fireRate.text = $"Fire Rate: {playerGun._shootingSpeed}";
         magSize.text = $"Mag Size: {playerGun._maxMagSize}";
         ammo.text = $"{playerGun.CurrentMagSize} / {playerGun._maxMagSize}";
+        waveNumber.text = $"Wave: {spawner.Wave}";
         if (player.currentTip != "")
         {
             tip.SetActive(true);
