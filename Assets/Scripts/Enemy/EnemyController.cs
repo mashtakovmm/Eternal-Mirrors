@@ -35,6 +35,7 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
+        moneyManager = FindObjectOfType<MoneyManager>();
         spawner = FindObjectOfType<EnemySpawner>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         player = FindObjectOfType<PlayerContorller>();

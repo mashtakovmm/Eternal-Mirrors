@@ -16,6 +16,7 @@ public class EnemySpawner : MonoBehaviour
     [Header("Plane Bounds")]
     [SerializeField] private GameObject plane;
     Tilemap tilemap;
+    [SerializeField] int killsToEnd = 10;
     public int kills = 0;
     private PolygonCollider2D spawnArea;
     [SerializeField] GameManager gameManager;
@@ -38,7 +39,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if (kills >= 2)
+        if (kills >= killsToEnd)
         {
             kills = 0;
             gameManager.EnterState(GameManager.GameState.Shopping);
@@ -49,6 +50,7 @@ public class EnemySpawner : MonoBehaviour
     public void StartSpawn()
     {
         wave++;
+        killsToEnd += wave * 10;
         if (spawnCoroutine != null)
         {
             StopCoroutine(spawnCoroutine);
@@ -105,6 +107,7 @@ public class EnemySpawner : MonoBehaviour
             if (smokeCount < 3)
             {
                 Instantiate(smokePrefab, spawnPoint, Quaternion.identity, transform);
+                smokeCount ++;
             }
             EnemyController enemyController = testEnemyPrefab.GetComponent<EnemyController>();
             enemyController.ApplyWaveDiff(wave);

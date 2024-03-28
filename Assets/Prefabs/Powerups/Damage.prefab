@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1539996848525122672}
   m_Layer: 0
   m_Name: Damage
-  m_TagString: Untagged
+  m_TagString: Plane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

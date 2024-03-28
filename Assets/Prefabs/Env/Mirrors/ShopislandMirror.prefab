@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5515703916778440744}
   m_Layer: 0
   m_Name: ShopislandMirror
-  m_TagString: Untagged
+  m_TagString: Plane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,6 +127,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedMirror: {fileID: 4193556132252701379, guid: fd8778263e5489c408209adc088b11a4, type: 3}
+  type: 0
+  tipText: 
 --- !u!58 &5515703916778440744
 CircleCollider2D:
   m_ObjectHideFlags: 0

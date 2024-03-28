@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 310686149803996376}
   m_Layer: 0
   m_Name: FightIslandMirror
-  m_TagString: Untagged
+  m_TagString: Plane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,6 +127,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedMirror: {fileID: 126854077041349048, guid: a0738918d71433d4099eb6b71513dbdc, type: 3}
+  type: 0
+  tipText: 
 --- !u!58 &310686149803996376
 CircleCollider2D:
   m_ObjectHideFlags: 0

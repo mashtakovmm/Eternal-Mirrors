@@ -13,5 +13,4 @@ This project utilizes assets:
 **Wendy Neue Font** created by **UkiyoMoji**: [Wendy Neue Font](https://www.1001fonts.com/wendy-neue-font.html)
 
 ### Music
-
-### SFX
+**Railgun Rain** created by **Ivan Stanton (northivanastan)**: [Railgun Rain](https://opengameart.org/content/railgun-rain)
