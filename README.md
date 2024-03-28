@@ -10,5 +10,8 @@ This project utilizes assets:
 - **Simple 2D Platformer Assets Pack** created by **Goldmetal**: [Simple 2D Platformer Assets Pack](https://assetstore.unity.com/packages/2d/characters/simple-2d-platformer-assets-pack-188518)
 
 ### Fonts
+**Wendy Neue Font** created by **UkiyoMoji**: [Wendy Neue Font](https://www.1001fonts.com/wendy-neue-font.html)
 
+### Music
 
+### SFX
