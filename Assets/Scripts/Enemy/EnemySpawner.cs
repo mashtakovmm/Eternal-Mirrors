@@ -1,7 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -13,43 +12,74 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Plane Bounds")]
     [SerializeField] private GameObject plane;
+    Tilemap tilemap;
+    public int kills = 0;
     private PolygonCollider2D spawnArea;
-
+    [SerializeField] GameManager gameManager;
     float maxSpawnTime;
     float minSpawnTime;
     int waveWeight;
+    private Coroutine spawnCoroutine;
+    bool isSpawning;
+
 
     void Start()
     {
-        spawnArea = plane.GetComponent<PolygonCollider2D>();
-        if (spawnArea == null)
-        {
-            Debug.LogError("No collider on plane!!");
-        }
-
+        tilemap = plane.GetComponent<Tilemap>();
         maxSpawnTime = waveData.MaxSpawnTime;
         minSpawnTime = waveData.MinSpawnTime;
         waveWeight = waveData.WaveWeight;
-
-        StartCoroutine(SpawnCourutine());
     }
 
-    void Update()
+    private void Update()
     {
+        if (kills >= 2)
+        {
+            kills = 0;
+            gameManager.EnterState(GameManager.GameState.Shopping);
+            StopSpawning();
+        }
+    }
 
+    public void StartSpawn()
+    {
+        if (spawnCoroutine != null)
+        {
+            StopCoroutine(spawnCoroutine);
+        }
+        isSpawning = true;
+        spawnCoroutine = StartCoroutine(SpawnCourutine());
+    }
+
+    public void StopSpawning()
+    {
+        Debug.Log("Stop");
+        if (spawnCoroutine != null)
+        {
+            StopCoroutine(spawnCoroutine);
+            spawnCoroutine = null;
+        }
+        isSpawning = false;
+
+        foreach (Transform child in transform)
+        {
+            Debug.Log("destroy");
+            Destroy(child.gameObject);
+        }
     }
 
     private IEnumerator SpawnCourutine()
     {
-        yield return new WaitForSeconds(UnityEngine.Random.Range(minSpawnTime, maxSpawnTime));
+        yield return new WaitForSeconds(Random.Range(minSpawnTime, maxSpawnTime));
 
-        Vector3 spawnPoint = new Vector3(UnityEngine.Random.Range(-plane.transform.localScale.x / 2,
-        plane.transform.localScale.x / 2), UnityEngine.Random.Range(-plane.transform.localScale.y / 2, plane.transform.localScale.y / 2), 0);
-
+        Vector3 spawnPoint = new Vector3(Random.Range(-tilemap.size.x / 2, tilemap.size.x / 2), Random.Range(-tilemap.size.y / 2, tilemap.size.y / 2), 0);
         spawnPoint += plane.transform.position;
 
-        Instantiate(testEnemyPrefab, spawnPoint, Quaternion.identity);
+        Instantiate(testEnemyPrefab, spawnPoint, Quaternion.identity, transform);
 
-        StartCoroutine(SpawnCourutine());
+        if (isSpawning)
+        {
+            StartCoroutine(SpawnCourutine());
+        }
     }
 }

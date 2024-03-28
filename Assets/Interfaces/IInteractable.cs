@@ -5,4 +5,5 @@ public interface IInteractable
     public void Interact(GameObject gameObject);
     public void Highligh();
     public void RemoveHighligh();
+    public string GetTip();
 }

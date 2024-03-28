@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour
     private Vector2 playerPosition;
     private Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
+    EnemySpawner spawner;
 
     // Data SO stuff
     private int health;
@@ -25,6 +26,7 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
+        spawner = FindObjectOfType<EnemySpawner>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         player = FindObjectOfType<PlayerContorller>();
         rb = GetComponent<Rigidbody2D>();
@@ -73,6 +75,7 @@ public class EnemyController : MonoBehaviour
 
     private void Die()
     {
+        spawner.kills ++;
         Destroy(gameObject);
     }
 }

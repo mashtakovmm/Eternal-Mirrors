@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72d8fec3fbed70a4fb41bedbee7752ee, type: 3}
-  m_Name: Gun
+  m_Name: Autorifle
   m_EditorClassIdentifier: 
-  _gunName: Pistol
+  _gunName: Autorifle
   _reloadSpeed: 2.5
-  _shootingSpeed: 0.85
+  _shootingSpeed: 0.2
   _damage: 10
-  _magSize: 12
+  _magSize: 31
   _bulletSpeed: 25

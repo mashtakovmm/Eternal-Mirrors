@@ -9,7 +9,8 @@ public class PlayerContorller : MonoBehaviour
     [Header("Controls Variables")]
     [SerializeField] private float speed;
     [Header("Stats")]
-    [SerializeField] private int _health;
+    [SerializeField] public int _maxHealth;
+    private int health;
 
     private List<IInteractable> interactables;
     private Animator animator;
@@ -17,8 +18,14 @@ public class PlayerContorller : MonoBehaviour
     SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
 
+    public int MaxHealth => _maxHealth;
+    public int Health => health;
+    public float Speed => speed;
+    public string currentTip = "";
+
     private void Start()
     {
+        health = _maxHealth;
         rb = GetComponent<Rigidbody2D>();
         interactables = new List<IInteractable>();
         animator = GetComponent<Animator>();
@@ -35,6 +42,7 @@ public class PlayerContorller : MonoBehaviour
         if (interactables.Count != 0 && interactables != null)
         {
             interactables[0].Highligh();
+            currentTip = interactables[0].GetTip();
         }
     }
 
@@ -76,12 +84,12 @@ public class PlayerContorller : MonoBehaviour
 
     public void TakeDamage(int value)
     {
-        _health -= value;
-        if (_health <= 0)
+        _maxHealth -= value;
+        if (_maxHealth <= 0)
         {
             Die();
         }
-        Debug.Log(_health);
+        Debug.Log(_maxHealth);
     }
 
     private void Die()
@@ -94,7 +102,6 @@ public class PlayerContorller : MonoBehaviour
         IInteractable interactable = other.GetComponent<IInteractable>();
         if (interactable != null)
         {
-            Debug.Log("Mirror");
             interactables.Add(interactable);
         }
     }
@@ -106,6 +113,7 @@ public class PlayerContorller : MonoBehaviour
         {
             interactable.RemoveHighligh();
             interactables.Remove(interactable);
+            currentTip = "";
         }
     }
 }

@@ -64,7 +64,6 @@ public class InputReader : ScriptableObject, PlayerInputActions.IPlayerActions
         {
             ShootStopEvent?.Invoke();
         }
-        Debug.Log(context);
     }
 
     public void OnPause(InputAction.CallbackContext context)
